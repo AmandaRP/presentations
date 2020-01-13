@@ -87,5 +87,8 @@ The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihu
 * Examples: https://github.com/rstudio/shiny-examples
 * https://amandarp.shinyapps.io/TwitterLikes/
 * https://gqueiroz.shinyapps.io/rshinylady/
+* https://nsgrantham.shinyapps.io/tidytuesdayrocks/ 
 
+# Let's build an app!
 
+https://twitter.com/thomas_mock/status/1214255918533292037
