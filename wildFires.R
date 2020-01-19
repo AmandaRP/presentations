@@ -65,6 +65,25 @@ fires %>%
 #TODO: Recreate https://twitter.com/thomas_mock/status/1214255918533292037/photo/3
 
 library(lubridate)
+
+#Look at city measurements (need to be careful about what obs are used to compute averages)
+temperature %>%
+  mutate(year = year(date)) %>%
+  #filter(year >= 1950, year < 2020) %>%
+  replace_na(list(temperature = 0)) %>%
+  #select(city_name) %>%
+  group_by(city_name, year) %>%
+  summarize(avg = mean(temperature), count = n()) %>%
+  #distinct()
+  ggplot(aes(year,avg, group = city_name, color = city_name)) +
+  geom_line()
+
+#Looks like it's best to either:
+# 1. use 1950-2018, or
+# 2. use 1930-2018 and filter out Brisbane (it was added 1949)
+
+# List of cities: Brisbane, Canberra, Kent, Melbourne, Perth, Port, Sydney
+
 temp_avgs <- temperature %>% 
   mutate(year = year(date)) %>%
   drop_na() %>%
@@ -119,13 +138,21 @@ temp_avgs %>%
 ## rainfall
 
 rainfall %>% 
-  summarize(m = min(year), max = max(year), cnt = n())
+  summarize(m = min(year), max = max(year))
 
+rainfall %>%
+  group_by(year) %>%
+  drop_na() %>%
+  summarize(count = n()) %>%
+  filter(year >= 1975, year < 2020) %>%
+  ggplot(aes(year, count)) +
+  geom_point()
 
-#look at timeline by city. TODO: Need to impute missing data.
+#look at timeline by city. 
 rainfall %>%
   filter(year >= 1950, year < 2020) %>%
-  replace_na(list(rainfall = 0)) %>%
+  #replace_na(list(rainfall = 0)) %>%
+  drop_na() %>%
   #select(city_name) %>%
   group_by(city_name, year) %>%
   summarize(avg = mean(rainfall), count = n()) %>%
@@ -133,17 +160,21 @@ rainfall %>%
   ggplot(aes(year,avg, group = city_name, color = city_name)) +
   geom_line()
   
+# Looks like we need to:
+#1. Filter >= 1975 and < 2020
+#2. Filter out Canbera b/c it wasn't added until approx 2008
+#3. Impute values (by group) - important for Brisbane and Melbourne
 
+# Yuck, rainfall data is so messy (num observations keep changing for all cities).
+# Decision: Going to just work with temperature data and not rainfall
 
-rain_avgs <- rainfall %>% 
-  drop_na() %>%
+#rain_avgs <- 
+rainfall %>% 
+  filter(year >= 1975, year < 2020, city_name != "Canberra") %>%
+  drop_na() %>% #TODO impute
   group_by(year) %>%
   summarize(avg_rain = mean(rainfall, na.rm = TRUE), count = n()) 
 
-rain_avgs %>%
-  filter(year >= 1950, year < 2020) %>%
-  ggplot(aes(year, count)) +
-  geom_point()
 
 rain_avgs %<>% filter(year >= 1950, year < 2020)
 
