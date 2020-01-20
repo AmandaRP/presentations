@@ -80,9 +80,10 @@ temperature %>%
 
 #Looks like it's best to either:
 # 1. use 1950-2018, or
-# 2. use 1930-2018 and filter out Brisbane (it was added 1949)
+# 2. use 1930-2018 and filter out Brisbane (it was added 1949), or
+# 3. just focus on NSW cities: Canberra, Melbourne, and Sydney. 1930-2018 (will better match up to NSW map data)
 
-# List of cities: Brisbane, Canberra, Kent, Melbourne, Perth, Port, Sydney
+# List of cities: Brisbane, Canberra*, Kent, Melbourne*, Perth, Port, Sydney*
 
 temp_avgs <- temperature %>% 
   mutate(year = year(date)) %>%
