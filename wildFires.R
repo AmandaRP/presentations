@@ -46,14 +46,14 @@ url <- "http://www.rfs.nsw.gov.au/feeds/majorIncidents.json"
 fires <- st_read(url)
 fires
 
-mapview(fires)
+mapview(fires, color = "red", col.regions = "magenta")
 
 #' Hacky way to get rid of points within geometry collections
 fire_poly <- fires %>% 
   st_buffer(dist = 0) %>% 
   st_union(by_feature = TRUE)
 
-mapview(fire_poly)
+mapview(fire_poly, zcol = "title", color = "white", col.regions = "red", legend = FALSE)
 
 fires %>% 
   mutate(pubdate = as.character(pubDate),
