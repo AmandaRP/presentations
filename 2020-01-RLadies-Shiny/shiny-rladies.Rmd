@@ -39,8 +39,17 @@ class: inverse, center, middle
 
 # Get Started
 
----
+3 major components: ui, server, and shinyApp
 
+---
+# Pitfalls
+
+ui <- fluidPage(...) is a function call. Parameters, commas
+
+server <- function(){...} is a function definition. No commas.
+
+
+---
 # Hello World
 
 
