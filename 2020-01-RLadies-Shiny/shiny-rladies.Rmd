@@ -27,101 +27,26 @@ class: inverse, center, middle
 # Introduction to Shiny
 ### R-Ladies Meetup
 ### Amanda Plunkett
+### Twitter: @DrAmandaRP
 
 
 ```{r echo=FALSE, out.width = '25%'}
 knitr::include_graphics("hex-shiny.png")
 ```
 
-
-
 ---
-# Before Shiny
+# What is Shiny?
+
+An R package for building interactive web applications.
+
+--
+
+# Before Shiny:
 
 ```{r echo=FALSE, fig.align='center'}
 meme_get("OneDoesNotSimply") %>% 
   meme_text_bottom("One does not simply\nbuild a web app")
 ```
-
-???
-
-Image credit: [memer R package](https://github.com/sctyner/memer)
-
----
-class: center, middle
-background-image: hex-shiny.png
-background-position: top right
-background-size: 110px 120px
-
-# xaringan
-
-### /ʃaː.'riŋ.ɡan/
-
-```{r pressure, echo=FALSE, out.width = '25%'}
-knitr::include_graphics("hex-shiny.png")
-```
-
-
----
-# Help, I'm frustrated!
-
-<center>
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">You&#39;re doing it right if you get frustrated: if you&#39;re not frustrated, you&#39;re (probably) not stretching yourself mentally</p>&mdash; Hadley Wickham (@hadleywickham) <a href="https://twitter.com/hadleywickham/status/565516733516349441?ref_src=twsrc%5Etfw">11 February 2015</a></blockquote>
-</center>
-
-
----
-class: inverse, center, middle
-
-# Get Started
-
-3 major components: ui, server, and shinyApp
-
----
-# Pitfalls
-
-`ui <- fluidPage(...)` is a function call. Parameters, commas
-
-`server <- function(){...}` is a function definition. No commas.
-
-
-
----
-class: center, middle
-
-# Do I need shiny?
-
-Maybe not. flexdashboard
-
----
-# Where to host apps
-
-www.shinyapps.io 
-
----
-# Instructions
-
-
-
-
----
-class: center, middle
-
-# Thanks!
-
-Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
-
-The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).
-
----
-# Resources
-
-* [Shiny Cheatsheet](http://shiny.rstudio.com/articles/cheatsheet.html)
-* [Shiny Website](https://shiny.rstudio.com/)
-* #rshiny on Twitter
-* [Mastering Shiny](https://mastering-shiny.org/), by Hadley Wickham
-* [Building Big Shiny Apps](https://thinkr-open.github.io/building-shiny-apps-workflow/) by Colin Fay, Vincent Guyader, Cervan Girard, and Sébastien Rochette
-* [Shiny in Production](https://kellobri.github.io/shiny-prod-book/index.html) by Kelly O'Brian
 
 ---
 # Examples
@@ -130,6 +55,338 @@ The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihu
 * https://amandarp.shinyapps.io/TwitterLikes/
 * https://gqueiroz.shinyapps.io/rshinylady/
 * https://nsgrantham.shinyapps.io/tidytuesdayrocks/ 
+
+
+---
+class: middle
+# How to build a Shiny App: Three Major Components
+
+
+```{example}
+
+# Define the layout of the user interface
+ui <- fluidPage()
+
+# Define stuff that needs to be computed on the back end 
+server <- function(input, output) {}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+```
+
+---
+# Let's look at a simple code example
+
+1. In RStudio run `library(shiny)`
+2. File -> New File -> Shiny Web App
+3. Give it a name and choose the "Single File" option
+4. Click "Run App"
+
+```{r, eval = FALSE}
+# Define UI for application that draws a histogram
+ui <- fluidPage(  #<<
+   
+   # Application title
+   titlePanel("Old Faithful Geyser Data"),   
+   
+   # Sidebar with a slider input for number of bins 
+   sidebarLayout(
+      sidebarPanel(
+         sliderInput("bins",
+                     "Number of bins:",
+                     min = 1,
+                     max = 50,
+                     value = 30)
+      ),
+      
+      # Show a plot of the generated distribution
+      mainPanel(
+         plotOutput("distPlot")
+      )
+   )
+)  #<<
+
+```
+
+---
+# Let's look at a simple code example
+
+1. In RStudio run `library(shiny)`
+2. File -> New File -> Shiny Web App
+3. Give it a name and choose the "Single File" option
+4. Click "Run App"
+
+```{r, eval = FALSE}
+# Define UI for application that draws a histogram
+ui <- fluidPage(  
+   
+   # Application title
+   titlePanel("Old Faithful Geyser Data"),     #<<
+   
+   # Sidebar with a slider input for number of bins 
+   sidebarLayout(
+      sidebarPanel(
+         sliderInput("bins",
+                     "Number of bins:",
+                     min = 1,
+                     max = 50,
+                     value = 30)
+      ),
+      
+      # Show a plot of the generated distribution
+      mainPanel(
+         plotOutput("distPlot")
+      )
+   )
+)
+
+```
+
+---
+# Let's look at a simple code example
+
+1. In RStudio run `library(shiny)`
+2. File -> New File -> Shiny Web App
+3. Give it a name and choose the "Single File" option
+4. Click "Run App"
+
+```{r, eval = FALSE}
+# Define UI for application that draws a histogram
+ui <- fluidPage(  
+   
+   # Application title
+   titlePanel("Old Faithful Geyser Data"),   
+   
+   # Sidebar with a slider input for number of bins 
+   sidebarLayout(                     #<<
+      sidebarPanel(            
+         sliderInput("bins",
+                     "Number of bins:",
+                     min = 1,
+                     max = 50,
+                     value = 30)
+      ), 
+      
+      # Show a plot of the generated distribution
+      mainPanel(
+         plotOutput("distPlot")
+      )
+   ) #<<
+)
+
+```
+
+---
+# Let's look at a simple code example
+
+1. In RStudio run `library(shiny)`
+2. File -> New File -> Shiny Web App
+3. Give it a name and choose the "Single File" option
+4. Click "Run App"
+
+```{r, eval = FALSE}
+# Define UI for application that draws a histogram
+ui <- fluidPage(  
+   
+   # Application title
+   titlePanel("Old Faithful Geyser Data"),   
+   
+   # Sidebar with a slider input for number of bins 
+   sidebarLayout(                     
+      sidebarPanel(            #<<
+         sliderInput("bins",
+                     "Number of bins:",
+                     min = 1,
+                     max = 50,
+                     value = 30)
+      ), #<<
+      
+      # Show a plot of the generated distribution
+      mainPanel(
+         plotOutput("distPlot")
+      )
+   )
+)
+
+```
+
+---
+# Let's look at a simple code example
+
+1. In RStudio run `library(shiny)`
+2. File -> New File -> Shiny Web App
+3. Give it a name and choose the "Single File" option
+4. Click "Run App"
+
+```{r, eval = FALSE}
+# Define UI for application that draws a histogram
+ui <- fluidPage(  
+   
+   # Application title
+   titlePanel("Old Faithful Geyser Data"),   
+   
+   # Sidebar with a slider input for number of bins 
+   sidebarLayout(                     
+      sidebarPanel(            
+         sliderInput("bins",  #<<
+                     "Number of bins:", #<<
+                     min = 1,          #<<
+                     max = 50,         #<<
+                     value = 30)       #<<
+      ), 
+      
+      # Show a plot of the generated distribution
+      mainPanel(
+         plotOutput("distPlot")
+      )
+   )
+)
+
+```
+
+
+---
+# Let's look at a simple code example
+
+1. In RStudio run `library(shiny)`
+2. File -> New File -> Shiny Web App
+3. Give it a name and choose the "Single File" option
+4. Click "Run App"
+
+```{r, eval = FALSE}
+# Define UI for application that draws a histogram
+ui <- fluidPage(  
+   
+   # Application title
+   titlePanel("Old Faithful Geyser Data"),   
+   
+   # Sidebar with a slider input for number of bins 
+   sidebarLayout(                     
+      sidebarPanel(            
+         sliderInput("bins",
+                     "Number of bins:",
+                     min = 1,
+                     max = 50,
+                     value = 30)
+      ), 
+      
+      # Show a plot of the generated distribution
+      mainPanel(                        #<<
+         plotOutput("distPlot")        
+      )                                #<<
+   )
+)
+
+```
+
+---
+# Let's look at a simple code example
+
+1. In RStudio run `library(shiny)`
+2. File -> New File -> Shiny Web App
+3. Give it a name and choose the "Single File" option
+4. Click "Run App"
+
+```{r, eval = FALSE}
+# Define UI for application that draws a histogram
+ui <- fluidPage(  
+   
+   # Application title
+   titlePanel("Old Faithful Geyser Data"),   
+   
+   # Sidebar with a slider input for number of bins 
+   sidebarLayout(                     
+      sidebarPanel(            
+         sliderInput("bins",
+                     "Number of bins:",
+                     min = 1,
+                     max = 50,
+                     value = 30)
+      ), 
+      
+      # Show a plot of the generated distribution
+      mainPanel(                        
+         plotOutput("distPlot")        #<<
+      )                                
+   )
+)
+
+```
+
+---
+# The Server Function
+
+```{r, eval = FALSE}
+# Define server logic required to draw a histogram
+server <- function(input, output) { #<<
+   
+   output$distPlot <- renderPlot({
+      # generate bins based on input$bins from ui.R
+      x    <- faithful[, 2] 
+      bins <- seq(min(x), max(x), length.out = input$bins + 1)
+      
+      # draw the histogram with the specified number of bins
+      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+   })
+}  #<<
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
+
+
+
+
+---
+# Remember!
+
+`ui <- fluidPage(...)` is a *function call*. We add parameters to the `fluidPage` function. Need to use commas.
+
+`server <- function(){...}` is a *function definition*. No commas.
+
+```{r echo=FALSE, out.width = '60%', fig.align='center'}
+knitr::include_graphics("dontforget.jpeg")
+```
+
+
+---
+# Where to host apps
+
+Deploy with a click of a button:
+* shinyapps.io: Free and paid options   
+* RStudio Connect: Commercial option. 
+
+Open source option:
+* Shiny Server: Open source 
+
+
+---
+# Do I need shiny?
+
+It depends. If you'd like to create a dashboard, you might consider the {**flexdashboard**} package. 
+
+Pros (compared to Shiny):
+1. Easier to learn-- just write an Rmd document and knit!
+
+Cons (compared to Shiny):
+1. R not running in the background. No user interaction.
+2. Updates when the file is re-knit
+
+See more information at rmarkdown.rstudio.com/flexdashboard.
+
+
+
+---
+# Shiny Resources
+
+* `#rshiny` on Twitter
+* [Shiny Cheatsheet](http://shiny.rstudio.com/articles/cheatsheet.html)
+* [Shiny Website](https://shiny.rstudio.com/)
+* [Mastering Shiny](https://mastering-shiny.org/), by Hadley Wickham
+* [Building Big Shiny Apps](https://thinkr-open.github.io/building-shiny-apps-workflow/) by Colin Fay, Vincent Guyader, Cervan Girard, and Sébastien Rochette
+* [Shiny in Production](https://kellobri.github.io/shiny-prod-book/index.html) by Kelly O'Brian
+
 
 ---
 class: center, middle
@@ -141,4 +398,15 @@ class: center, middle
  welcomes you to week 2 of #TidyTuesday! We&#39;re exploring the Australian fires - please use your best judgement when analyzing this ongoing issue, especially via maps!</p>&mdash; Thomas Mock (@thomas_mock
 ) <a href="https://twitter.com/thomas_mock/status/1214255918533292037">6. January 2020</a></blockquote>
 </center>
+
+
+
+---
+class: center, middle
+
+# Thanks!
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
+
 
