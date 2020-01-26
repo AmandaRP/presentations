@@ -14,12 +14,40 @@ library(gghighlight)
 # Get the Australian temperature data
 temperature <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-07/temperature.csv')
 
-#Update temperature dataset
+# Update temperature dataset
 temperature %<>%
   drop_na() %>%
   mutate(year = year(date)) %>%
   filter(year >= 1930, year < 2019) %>%  #to avoid years with missing data
   filter(city_name %in% c("CANBERRA", "MELBOURNE", "SYDNEY")) #focus on NSW cities
+
+# A function used in the server function for creating the temperature plot
+create_temperature_plot <- function(temp_avgs, overall_avg_temp){
+  p <- temp_avgs %>% 
+    mutate(temp_minus_mean = avg_temp - overall_avg_temp) %>%
+    ggplot(aes(year, temp_minus_mean, fill = temp_minus_mean<0)) + 
+    geom_col() +
+    labs(title = "Annual Temperature Above or Below the Average",
+         x = element_blank(), 
+         y = "Degrees Celcius",
+         caption = "Source: Australian Government Bureau of Meteorology") +
+    theme_minimal() +
+    scale_y_continuous(breaks = c(-1, -0.5, 0.5, 1),
+                       labels = c(parse(text = TeX('$-1.0^o$')), 
+                                  parse(text = TeX('$-0.5^o$')), 
+                                  parse(text = TeX('$+0.5^o$')), 
+                                  parse(text = TeX('$+1.0^o$')))) +
+    theme(plot.background = element_blank(),
+          panel.grid.minor.y = element_blank(),
+          panel.grid.major.y = element_blank(),
+          panel.grid.major.x = element_line(linetype = "dashed", color = "grey"),
+          panel.grid.minor.x = element_blank(),
+          axis.title.y = element_text(color = "darkgrey"),
+          legend.position = "none",
+          plot.caption = element_text(color = "darkgrey")) 
+  
+  #return(p)
+}
 
 
 rainfall <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-07/rainfall.csv')
