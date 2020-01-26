@@ -2,7 +2,6 @@
 # This R script loads required libraries and datasets
 
 # Load packages: 
-library(shiny)
 library(shinythemes)
 library(tidyverse)
 library(latex2exp)
