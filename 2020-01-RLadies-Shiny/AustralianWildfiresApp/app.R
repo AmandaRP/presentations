@@ -11,41 +11,44 @@ source("wildfires.R")
 
 
 # Define UI for application
-ui <- fluidPage(
+ui <- fluidPage(theme = shinytheme("cerulean"), 
+                #See more themes at https://rstudio.github.io/shinythemes/ 
    
-  # Application title
-  
-  titlePanel("Climate: New South Wales, Australia"),
-  p("A focused look at historic temperatures and current wildfires in 
-    New South Wales, Australia"),
-   
-  # Sidebar with a slider input for number of bins 
+  # Plots and controls 
   splitLayout(
     verticalLayout(
-      titlePanel("Temperature"),
+      titlePanel("Climate: New South Wales, Australia"),
+      p("A focused look at historic temperatures, rainfall, and current wildfires in 
+        New South Wales, Australia"),
+      titlePanel("Current Wildfires"),  
+      mapviewOutput("mapPlot"),
+      HTML("<p align='right'><font size='1'>Source: NSW Rural Fire Service</font></p>")
+    ),
+    verticalLayout(
+      #titlePanel("Temperature"),
       fluidRow(
-        column(width = 6,
+        column(width = 2),
+        column(width = 5,
           sliderInput("year", "Years:",
                     min = 1930, max = 2018,
                     value = c(1930,2018))
           ),
-        column(width = 6,
+        column(width = 5,
           checkboxGroupInput("city", "City:", 
                              choices = c("Canberra" = "CANBERRA", 
                                          "Melbourne" = "MELBOURNE", 
                                          "Sydney" = "SYDNEY"),
+                             selected = c("CANBERRA", "MELBOURNE", "SYDNEY"),
                                   inline = FALSE
                              )
         )
           
       ),
-      plotOutput("tempPlot")
-    ),
+      plotOutput("tempPlot", height = "250px"),
+      plotOutput("rainPlot", height = "250px")
+    )
     
-    verticalLayout(
-      titlePanel("Wildfires"),  
-      mapviewOutput("mapPlot")   
-    )  
+      
   )
 )
 
@@ -63,23 +66,26 @@ server <- function(input, output) {
   
   #temperature plot
    output$tempPlot <- renderPlot({
-     
+       
      # Compute averages (for selected cities and years)
      temp_avgs <- temperature %>% 
+       filter(year >= input$year[1], year <= input$year[2], city_name %in% input$city) %>%
        group_by(year) %>%
        summarize(avg_temp = mean(temperature, na.rm = TRUE)) 
        
-       # Compute mean across all (selected) cities and years
+     # Compute mean across all (selected) cities and years
      overall_avg_temp <- temp_avgs %>% 
        summarize(overall_avg_temp = mean(avg_temp)) %>% 
        unlist()
        
+     #plot
      temp_avgs %>% 
        mutate(temp_minus_mean = avg_temp - overall_avg_temp) %>%
        ggplot(aes(year, temp_minus_mean, fill = temp_minus_mean<0)) + 
        geom_col() +
-       labs(x = element_blank(), 
-            y = element_blank(),
+       labs(title = "Annual Temperature Above or Below the Average",
+            x = element_blank(), 
+            y = "Degrees Celcius",
             caption = "Source: Australian Government Bureau of Meteorology") +
        theme_minimal() +
        scale_y_continuous(breaks = c(-1, -0.5, 0.5, 1),
@@ -92,16 +98,18 @@ server <- function(input, output) {
          panel.grid.major.y = element_blank(),
          panel.grid.major.x = element_line(linetype = "dashed", color = "grey"),
          panel.grid.minor.x = element_blank(),
-         plot.title = element_text(face = "bold"),
+         axis.title.y = element_text(color = "darkgrey"),
          legend.position = "none",
-         plot.caption = element_text(color = "darkgrey")) +
-       annotate("text", 
-                x = 1962, 
-                y = 0.7, 
-                color = "darkgrey",
-                label = "Annual temperature (degrees Celcius)\nabove or below the 1950-2018 average") 
+         plot.caption = element_text(color = "darkgrey")) 
      
-     
+   })
+   
+   output$rainPlot <- renderPlot({
+     p + xlim(input$year[1], input$year[2]) +
+       gghighlight(tolower(city_name) %in% tolower(input$city), 
+                   use_group_by = FALSE,
+                   use_direct_label = FALSE) 
+ 
    })
 }
 

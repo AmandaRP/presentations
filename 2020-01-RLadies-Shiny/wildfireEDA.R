@@ -142,24 +142,41 @@ rainfall %>%
   summarize(m = min(year), max = max(year))
 
 rainfall %>%
-  group_by(year) %>%
+  group_by(year, month) %>%
   drop_na() %>%
+  filter(city_name == "Brisbane") %>%
   summarize(count = n()) %>%
-  filter(year >= 1975, year < 2020) %>%
   ggplot(aes(year, count)) +
   geom_point()
 
-#look at timeline by city. 
-rainfall %>%
-  filter(year >= 1950, year < 2020) %>%
-  #replace_na(list(rainfall = 0)) %>%
+#Verify that rainfall was measured for all 12 months in the year
+valid_years <- rainfall %>% 
   drop_na() %>%
-  #select(city_name) %>%
+  group_by(city_name, year, month) %>%
+  count() %>%
   group_by(city_name, year) %>%
-  summarize(avg = mean(rainfall), count = n()) %>%
-  #distinct()
+  count() %>% #Count number of months were represented
+  filter(n == 12) %>%
+  select(city_name, year)
+
+
+#look at timeline by city. 
+rain_by_year <- rainfall %>%
+  inner_join(valid_years, by = c("city_name", "year")) %>%
+  filter(year >= 1930, year <= 2018) %>%
+  filter(city_name %in% c("Canberra", "Melbourne", "Sydney")) %>%
+  drop_na() %>%
+  group_by(city_name, year, month) %>%
+  summarize(monthly_avg = mean(rainfall)) %>% # monthly average
+  group_by(city_name, year) %>%
+  summarize(avg = mean(monthly_avg))  # yearly average
+  
+p <- rain_by_year %>% 
   ggplot(aes(year,avg, group = city_name, color = city_name)) +
-  geom_line()
+  geom_line() 
+
+p + gghighlight(city_name %in% c("Canberra", "Melbourne"), use_direct_label = FALSE)
+  
   
 # Looks like we need to:
 #1. Filter >= 1975 and < 2020
