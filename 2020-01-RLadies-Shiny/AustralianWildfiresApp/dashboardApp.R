@@ -28,6 +28,7 @@ ui <- dashboardPage(skin = "purple", # see more skins at https://rstudio.github.
                                    "Sydney" = "SYDNEY"),
                        selected = c("CANBERRA", "MELBOURNE", "SYDNEY"),
                        inline = FALSE),
+    
     p("Description: A focused look at historic temperatures, rainfall, and current wildfires in 
         New South Wales, Australia")),
         
@@ -37,7 +38,7 @@ ui <- dashboardPage(skin = "purple", # see more skins at https://rstudio.github.
       box(plotOutput("tempPlot", height = "250px"),
           plotOutput("rainPlot", height = "250px")),
       box(
-        titlePanel("Current Wildfires"),
+        headerPanel("Current Wildfires"),
         mapviewOutput("mapPlot"),
         HTML("<p align='right'><font size='1'>Source: NSW Rural Fire Service</font></p>")
       )

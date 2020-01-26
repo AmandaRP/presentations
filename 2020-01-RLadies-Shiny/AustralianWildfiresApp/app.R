@@ -104,6 +104,7 @@ server <- function(input, output) {
      
    })
    
+   # Rain plot
    output$rainPlot <- renderPlot({
      p + xlim(input$year[1], input$year[2]) +
        gghighlight(tolower(city_name) %in% tolower(input$city), 
