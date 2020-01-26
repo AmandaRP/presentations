@@ -7,6 +7,7 @@
 #    http://shiny.rstudio.com/
 #
 
+library(shiny)
 source("wildfires.R")
 
 
@@ -25,7 +26,6 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
       HTML("<p align='right'><font size='1'>Source: NSW Rural Fire Service</font></p>")
     ),
     verticalLayout(
-      #titlePanel("Temperature"),
       fluidRow(
         column(width = 2),
         column(width = 5,
@@ -52,7 +52,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
   )
 )
 
-# Define server logic required to draw a histogram
+# Define server logic 
 server <- function(input, output) {
   
   # Plot Fires courtesy of Dean Marchiori
