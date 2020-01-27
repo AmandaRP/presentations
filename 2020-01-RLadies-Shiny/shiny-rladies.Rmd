@@ -360,24 +360,8 @@ Deploy with a click of a button:
 Open source option:
 * Shiny Server: Open source 
 
+--
 
----
-# Do I need shiny?
-
-It depends. If you'd like to create a dashboard, you might consider the {**flexdashboard**} package. 
-
-Pros (compared to Shiny):
-1. Easier to learn-- just write an Rmd document and knit!
-
-Cons (compared to Shiny):
-1. R not running in the background. No user interaction.
-2. Updates when the file is re-knit
-
-See more information at rmarkdown.rstudio.com/flexdashboard.
-
-
-
----
 # Shiny Resources
 
 * `#rshiny` on Twitter
@@ -386,6 +370,23 @@ See more information at rmarkdown.rstudio.com/flexdashboard.
 * [Mastering Shiny](https://mastering-shiny.org/), by Hadley Wickham
 * [Building Big Shiny Apps](https://thinkr-open.github.io/building-shiny-apps-workflow/) by Colin Fay, Vincent Guyader, Cervan Girard, and Sébastien Rochette
 * [Shiny in Production](https://kellobri.github.io/shiny-prod-book/index.html) by Kelly O'Brian
+
+
+
+---
+# Do I need shiny?
+
+It depends. If you'd like to create a dashboard without user interaction, you might consider the {**flexdashboard**} package. 
+
+Pros (compared to Shiny):
+1. Easier to learn-- just write an Rmd document and knit!
+
+Cons (compared to Shiny):
+1. R not running in the background. No user interaction.
+2. Requires re-knitting to update content
+
+See more information at rmarkdown.rstudio.com/flexdashboard.
+
 
 
 ---
@@ -399,14 +400,47 @@ class: center, middle
 ) <a href="https://twitter.com/thomas_mock/status/1214255918533292037">6. January 2020</a></blockquote>
 </center>
 
+---
+# About the Data
 
+* We're going to focus on the New Sout Wales in south east Australia
+* Today's fire location data from NSW Rural Fire Service
+* Temperature (degrees Celcius) data from the Australian Government Bureau of Meteorology
+    - 1930 - 2018 (2019 was incomplete)
+    - Computed yearly average 
+* Rainfall data from the Australian Government Bureau of Meteorology
+    - 1930 - 2018
+    - Lots of missing data! Additionally, number of measurements varied by month.
+    - Removed years that did not have atleast one measurement per month for all 12 months.
+    - Computed monthly average and then rolled up to yearly average. 
+
+--
+# A sneak peak...
+
+* Shiny app: [amandarp.shinyapps.io/AustralianWildfiresApp](https://amandarp.shinyapps.io/AustralianWildfiresApp)
+* Shiny dashboard version: [amandarp.shinyapps.io/AustralianWildfiresDashboard](https://amandarp.shinyapps.io/AustralianWildfiresDashboard/)
 
 ---
-class: center, middle
-
 # Thanks!
 
-Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+.pull-left[
+* Data made available by Thomas Mock & @RForDataScienceCommunity 
+* Wildfire plotting code provided by Dean Marchiori 
+* Data sourced from the NSW Rural Fire Service and the Australian Government Bureau of Meteorology
+* Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+]
 
-
-
+.pull-right[
+Packages used in making the app: 
+* shiny
+* shinydashboard
+* shinythemes
+* tidyverse
+* ggplot2 
+* gghighlight 
+* magrittr 
+* lubridate 
+* latex2exp 
+* sf 
+* mapview
+]
