@@ -1,0 +1,12 @@
+name: AustralianWildfiresDashboard
+title: AustralianWildfiresDashboard
+username:
+account: amandarp
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1706921
+bundleId: 2755082
+url: https://amandarp.shinyapps.io/AustralianWildfiresDashboard/
+when: 1580093498.2319
+asMultiple: FALSE
+asStatic: FALSE

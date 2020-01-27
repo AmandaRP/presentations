@@ -7,9 +7,15 @@
 #    http://shiny.rstudio.com/
 #
 
+# Instructions:
+# 1. Try different themes (line 17)
+# 2. The rainfall plot (rainPlot) is defined in the server plot, but not 
+#    showing in the UI. Add it to the UI below the temperature plot.
+# 3. The year slider and city checkbox selection are not having an effect 
+#    on the plots. Fix this in the server function.
+
 library(shiny)
 source("wildfires.R")
-
 
 # Define UI for application
 ui <- fluidPage(theme = shinytheme("cerulean"), 
@@ -44,8 +50,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
         )
           
       ),
-      plotOutput("tempPlot", height = "250px"),
-      plotOutput("rainPlot", height = "250px")
+      plotOutput("tempPlot", height = "250px") 
     )
     
       
@@ -69,7 +74,7 @@ server <- function(input, output) {
        
      # Compute averages (for selected cities and years)
      temp_avgs <- temperature %>% 
-       filter(year >= input$year[1], year <= input$year[2], city_name %in% input$city) %>%
+       filter(year >= 1930, year <= 2018, city_name %in% c("CANBERRA", "MELBOURNE")) %>%
        group_by(year) %>%
        summarize(avg_temp = mean(temperature, na.rm = TRUE)) 
        
@@ -78,35 +83,16 @@ server <- function(input, output) {
        summarize(overall_avg_temp = mean(avg_temp)) %>% 
        unlist()
        
-     #plot
-     temp_avgs %>% 
-       mutate(temp_minus_mean = avg_temp - overall_avg_temp) %>%
-       ggplot(aes(year, temp_minus_mean, fill = temp_minus_mean<0)) + 
-       geom_col() +
-       labs(title = "Annual Temperature Above or Below the Average",
-            x = element_blank(), 
-            y = "Degrees Celcius",
-            caption = "Source: Australian Government Bureau of Meteorology") +
-       theme_minimal() +
-       scale_y_continuous(breaks = c(-1, -0.5, 0.5, 1),
-                          labels = c(parse(text = TeX('$-1.0^o$')), 
-                                     parse(text = TeX('$-0.5^o$')), 
-                                     parse(text = TeX('$+0.5^o$')), 
-                                     parse(text = TeX('$+1.0^o$')))) +
-       theme(plot.background = element_blank(),
-         panel.grid.minor.y = element_blank(),
-         panel.grid.major.y = element_blank(),
-         panel.grid.major.x = element_line(linetype = "dashed", color = "grey"),
-         panel.grid.minor.x = element_blank(),
-         axis.title.y = element_text(color = "darkgrey"),
-         legend.position = "none",
-         plot.caption = element_text(color = "darkgrey")) 
+     # Create plot using function defined in wildfires.R (to simplify this script)
+     p <- create_temperature_plot(temp_avgs, overall_avg_temp)
+     p
      
    })
    
+   # Rain plot
    output$rainPlot <- renderPlot({
-     p + xlim(input$year[1], input$year[2]) +
-       gghighlight(tolower(city_name) %in% tolower(input$city), 
+     p + xlim(1930, 2018) +
+       gghighlight(tolower(city_name) %in% tolower(c("CANBERRA", "MELBOURNE")), 
                    use_group_by = FALSE,
                    use_direct_label = FALSE) 
  

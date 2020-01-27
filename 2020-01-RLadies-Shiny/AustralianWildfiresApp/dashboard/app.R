@@ -13,7 +13,7 @@ source("wildfires.R")
 
 ui <- dashboardPage(skin = "purple", # see more skins at https://rstudio.github.io/shinydashboard/appearance.html
                     
-  dashboardHeader(title = "Climate: New South Wales, Australia", 
+  dashboardHeader(title = "New South Wales, Australia", 
                   titleWidth = 400),
   
   dashboardSidebar(
