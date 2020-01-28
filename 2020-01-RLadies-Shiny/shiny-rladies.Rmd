@@ -43,7 +43,7 @@ An R package for building interactive web applications.
 
 # Before Shiny:
 
-```{r echo=FALSE, fig.align='center'}
+```{r echo=FALSE, fig.align='center', out.width='80%'}
 meme_get("OneDoesNotSimply") %>% 
   meme_text_bottom("One does not simply\nbuild a web app")
 ```
@@ -51,14 +51,25 @@ meme_get("OneDoesNotSimply") %>%
 ---
 # Examples
 
-* Examples: https://github.com/rstudio/shiny-examples
-* https://amandarp.shinyapps.io/TwitterLikes/
-* https://gqueiroz.shinyapps.io/rshinylady/
-* https://nsgrantham.shinyapps.io/tidytuesdayrocks/ 
+Shiny:
 
+* https://nsgrantham.shinyapps.io/tidytuesdayrocks/ 
+* https://amandarp.shinyapps.io/TwitterLikes/
+
+Shiny Dashboard:
+
+* https://gqueiroz.shinyapps.io/rshinylady/
+
+Also, see the winners of the Shiny Contest:
+
+* https://blog.rstudio.com/2019/04/05/first-shiny-contest-winners/
+
+
+```{r echo=FALSE, out.width = '30%', fig.align='center'}
+knitr::include_graphics("shiny-contest.png")
+```
 
 ---
-class: middle
 # How to build a Shiny App: Three Major Components
 
 
@@ -68,12 +79,17 @@ class: middle
 ui <- fluidPage()
 
 # Define stuff that needs to be computed on the back end 
-server <- function(input, output) {}
+server <- function(input, output){}
 
 # Run the application 
 shinyApp(ui = ui, server = server)
 
 ```
+
+```{r echo=FALSE, out.width = '50%', fig.align='center'}
+knitr::include_graphics("threeamigos.jpg")
+```
+
 
 ---
 # Let's look at a simple code example
@@ -319,17 +335,17 @@ ui <- fluidPage(
 
 ```{r, eval = FALSE}
 # Define server logic required to draw a histogram
-server <- function(input, output) { #<<
+server <- function(input, output) { 
    
-   output$distPlot <- renderPlot({
+   output$distPlot <- renderPlot({   #<<
       # generate bins based on input$bins from ui.R
       x    <- faithful[, 2] 
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
+      bins <- seq(min(x), max(x), length.out = input$bins + 1)  #<<
       
       # draw the histogram with the specified number of bins
       hist(x, breaks = bins, col = 'darkgray', border = 'white')
    })
-}  #<<
+}  
 
 # Run the application 
 shinyApp(ui = ui, server = server)
@@ -345,8 +361,33 @@ shinyApp(ui = ui, server = server)
 
 `server <- function(){...}` is a *function definition*. No commas.
 
-```{r echo=FALSE, out.width = '60%', fig.align='center'}
+```{r echo=FALSE, out.width = '50%', fig.align='center'}
 knitr::include_graphics("dontforget.jpeg")
+```
+
+---
+# Inputs
+
+<center>
+.pull-left[
+```{r echo=FALSE, out.width = '85%'}
+knitr::include_graphics("inputs1.png")
+```
+]
+.pull-right[
+```{r echo=FALSE, out.width = '85%'}
+knitr::include_graphics("inputs2.png")
+```
+]
+</center>
+
+---
+# Outputs
+
+<br>
+
+```{r echo=FALSE, out.width = '85%', fig.align='center'}
+knitr::include_graphics("Outputs.png")
 ```
 
 
@@ -354,29 +395,39 @@ knitr::include_graphics("dontforget.jpeg")
 # Where to host apps
 
 Deploy with a click of a button:
+* RStudio Connect: Commercial
 * shinyapps.io: Free and paid options   
-* RStudio Connect: Commercial option. 
 
-Open source option:
-* Shiny Server: Open source 
+```{r echo=FALSE, out.width = '85%', fig.align='center'}
+knitr::include_graphics("publish.png")
+```
 
---
+
+Open source solution:
+* Shiny Server 
+
+---
 
 # Shiny Resources
 
+.pull-left[
 * `#rshiny` on Twitter
 * [Shiny Cheatsheet](http://shiny.rstudio.com/articles/cheatsheet.html)
 * [Shiny Website](https://shiny.rstudio.com/)
+* [Shiny Dashboard Website](https://rstudio.github.io/shinydashboard/)
 * [Mastering Shiny](https://mastering-shiny.org/), by Hadley Wickham
+]
+.pull-right[
 * [Building Big Shiny Apps](https://thinkr-open.github.io/building-shiny-apps-workflow/) by Colin Fay, Vincent Guyader, Cervan Girard, and Sébastien Rochette
 * [Shiny in Production](https://kellobri.github.io/shiny-prod-book/index.html) by Kelly O'Brian
+]
 
 
 
 ---
 # Do I need shiny?
 
-It depends. If you'd like to create a dashboard without user interaction, you might consider the {**flexdashboard**} package. 
+It depends. If you'd like to create a dashboard without user interaction, you might consider the **flexdashboard** package. 
 
 Pros (compared to Shiny):
 1. Easier to learn-- just write an Rmd document and knit!
@@ -385,12 +436,14 @@ Cons (compared to Shiny):
 1. R not running in the background. No user interaction.
 2. Requires re-knitting to update content
 
-See more information at rmarkdown.rstudio.com/flexdashboard.
+More info:
+* [Example](https://beta.rstudioconnect.com/jjallaire/htmlwidgets-ggplotly-geoms/htmlwidgets-ggplotly-geoms.html) of plotly graphs & flexdashboard
+* See more information at [rmarkdown.rstudio.com/flexdashboard](rmarkdown.rstudio.com/flexdashboard)
 
 
 
 ---
-class: center, middle
+class: center, middle, inverse
 # Let's build an app!
 
 <center>
@@ -421,13 +474,39 @@ class: center, middle
 * Shiny dashboard version: [amandarp.shinyapps.io/AustralianWildfiresDashboard](https://amandarp.shinyapps.io/AustralianWildfiresDashboard/)
 
 ---
+# Instructions
+
+1. The following packages need to be installed:
+```{R eval=FALSE}
+pkgs <- c( "shiny", "shinydashboard", "shinythemes", "tidyverse", "gghighlight", "lubridate", "latex2exp", "sf", "mapview" )
+install.packages( pkgs )
+```
+1. Code available at [github.com/AmandaRP/RLadiesBmoreShinyWorkshop](github.com/AmandaRP/RLadiesBmoreShinyWorkshop) (you can fork this repo or just copy and paste the code)
+2. You'll need the wildfires.R script in this directory
+3. We'll start by looking at the app.R script in the shinyApp folder
+    - Try running the app.
+    - Try different themes (line 17).
+    - The rainfall plot (rainPlot) is defined in the server plot, but not showing in the UI. Add it to the UI below the temperature plot.
+    - The year slider and city checkbox selection are not having an effect on the plots. Fix this in the server function.
+4. Next move to the app.R file in the shinyDashboard folder
+    - Try running the app.
+    - Copy and paste components of the shiny app from #3 into this shiny dashboard app.
+
+
+
+```{r echo=FALSE, out.width = '75%', fig.align='center', fig.cap='Photo: Matthew Abbot'}
+knitr::include_graphics("kangaroo_fire.jpg")
+```
+
+---
 # Thanks!
 
 .pull-left[
 * Data made available by Thomas Mock & @RForDataScienceCommunity 
-* Wildfire plotting code provided by Dean Marchiori 
+* Wildfire polygon code provided by Dean Marchiori 
 * Data sourced from the NSW Rural Fire Service and the Australian Government Bureau of Meteorology
 * Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
 ]
 
 .pull-right[
