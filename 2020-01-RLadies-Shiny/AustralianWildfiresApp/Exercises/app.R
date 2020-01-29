@@ -8,9 +8,9 @@
 #
 
 # Instructions:
-# 1. Try different themes (line 17)
-# 2. The rainfall plot (rainPlot) is defined in the server plot, but not 
-#    showing in the UI. Add it to the UI below the temperature plot.
+# 1. Try different themes (line 21)
+# 2. The rainfall plot (rainPlot) is defined in the server function, but not 
+#    showing in the UI. Add it to the UI, below the temperature plot.
 # 3. The year slider and city checkbox selection are not having an effect 
 #    on the plots. Fix this in the server function.
 
@@ -24,10 +24,9 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
   # Plots and controls 
   splitLayout(
     verticalLayout(
-      titlePanel("Climate: New South Wales, Australia"),
-      p("A focused look at historic temperatures, rainfall, and current wildfires in 
-        New South Wales, Australia"),
-      titlePanel("Current Wildfires"),  
+      titlePanel("Climate: South East Australia"),
+      p("A focused look at historic temperatures, rainfall, and current NSW wildfires"),
+      titlePanel("Current New South Wales Wildfires"),  
       mapviewOutput("mapPlot"),
       HTML("<p align='right'><font size='1'>Source: NSW Rural Fire Service</font></p>")
     ),
@@ -41,16 +40,17 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
           ),
         column(width = 5,
           checkboxGroupInput("city", "City:", 
-                             choices = c("Canberra" = "CANBERRA", 
+                             choices = c("Brisbane" = "BRISBANE",
+                                         "Canberra" = "CANBERRA", 
                                          "Melbourne" = "MELBOURNE", 
                                          "Sydney" = "SYDNEY"),
-                             selected = c("CANBERRA", "MELBOURNE", "SYDNEY"),
+                             selected = c("BRISBANE", "CANBERRA", "MELBOURNE", "SYDNEY"),
                                   inline = FALSE
                              )
         )
           
       ),
-      plotOutput("tempPlot", height = "250px") 
+      plotOutput("tempPlot", height = "250px")
     )
     
       
