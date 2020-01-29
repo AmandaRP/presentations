@@ -14,12 +14,14 @@ library(gghighlight)
 # Get the Australian temperature data
 temperature <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-07/temperature.csv')
 
+cities_of_interest <- c("BRISBANE","CANBERRA", "MELBOURNE", "SYDNEY")
+
 # Update temperature dataset
 temperature %<>%
   drop_na() %>%
   mutate(year = year(date)) %>%
   filter(year >= 1930, year < 2019) %>%  #to avoid years with missing data
-  filter(city_name %in% c("CANBERRA", "MELBOURNE", "SYDNEY")) #focus on NSW cities
+  filter(city_name %in% cities_of_interest) #focus on NSW cities
 
 # A function used in the server function for creating the temperature plot
 create_temperature_plot <- function(temp_avgs, overall_avg_temp){
@@ -66,7 +68,7 @@ valid_years <- rainfall %>%
 rain_by_year <- rainfall %>%
   inner_join(valid_years, by = c("city_name", "year")) %>%
   filter(year >= 1930, year <= 2018) %>%
-  filter(city_name %in% c("Canberra", "Melbourne", "Sydney")) %>%
+  filter(tolower(city_name) %in% tolower(cities_of_interest)) %>%
   drop_na() %>%
   group_by(city_name, year, month) %>%
   summarize(monthly_avg = mean(rainfall)) %>% # monthly average
