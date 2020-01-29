@@ -94,10 +94,9 @@ knitr::include_graphics("threeamigos.jpg")
 ---
 # Let's look at a simple code example
 
-1. In RStudio run `library(shiny)`
-2. File -> New File -> Shiny Web App
-3. Give it a name and choose the "Single File" option
-4. Click "Run App"
+1. In RStudio File -> New File -> Shiny Web App
+1. Give it a name and choose the "Single File" option
+1. Click "Run App"
 
 ```{r, eval = FALSE}
 # Define UI for application that draws a histogram
