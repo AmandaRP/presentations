@@ -386,8 +386,9 @@ install.packages( pkgs )
     - The year slider and city checkbox selection are not having an effect on the plots. Fix this in the server function.
     - Try different themes (line 17).
 5. Next move to the `app.R` file located in the `shinyDashboard` folder
-    - Try running the app.
-    - Copy and paste components of the shiny app from #3 into this shiny dashboard app.
+    - Try running the app. (You'll see it has missing components.)
+    - Copy and paste components of the shiny app from #3 into this shiny dashboard app (search for "TODO" in the dashboard app code for hints).
+    - Try other "skins". See line 21.
 
 
 
