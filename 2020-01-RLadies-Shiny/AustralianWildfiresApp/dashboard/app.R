@@ -13,40 +13,41 @@ source("wildfires.R")
 
 ui <- dashboardPage(skin = "purple", # see more skins at https://rstudio.github.io/shinydashboard/appearance.html
                     
-  dashboardHeader(title = "New South Wales, Australia", 
-                  titleWidth = 400),
-  
-  dashboardSidebar(
-  
-    sliderInput("year", "Years:",
-                min = 1930, max = 2018,
-                value = c(1930,2018)),
-    
-    checkboxGroupInput("city", "City:", 
-                       choices = c("Canberra" = "CANBERRA", 
-                                   "Melbourne" = "MELBOURNE", 
-                                   "Sydney" = "SYDNEY"),
-                       selected = c("CANBERRA", "MELBOURNE", "SYDNEY"),
-                       inline = FALSE),
-    
-    p("Description: A focused look at historic temperatures, rainfall, and current wildfires in 
-        New South Wales, Australia")),
-        
-  dashboardBody(
-    # Boxes need to be put in a row (or column)
-    fluidRow(
-      box(plotOutput("tempPlot", height = "250px"),
-          plotOutput("rainPlot", height = "250px")),
-      box(
-        headerPanel("Current Wildfires"),
-        mapviewOutput("mapPlot"),
-        HTML("<p align='right'><font size='1'>Source: NSW Rural Fire Service</font></p>")
-      )
-    )
-    
-  
-  )
-)
+                    dashboardHeader(title = "South East Australia", 
+                                    titleWidth = 400),
+                    
+                    dashboardSidebar(
+                      
+                      sliderInput("year", "Years:",
+                                  min = 1930, max = 2018,
+                                  value = c(1930,2018)),
+                      
+                      checkboxGroupInput("city", "City:", 
+                                         choices = c("Brisbane" = "BRISBANE",
+                                                     "Canberra" = "CANBERRA", 
+                                                     "Melbourne" = "MELBOURNE", 
+                                                     "Sydney" = "SYDNEY"),
+                                         selected = c("BRISBANE", "CANBERRA", "MELBOURNE", "SYDNEY"),
+                                         inline = FALSE),
+                      
+                      p("Description: A focused look at historic temperatures, rainfall, and current wildfires in 
+                        South Eastern Australia")),
+                    
+                    dashboardBody(
+                      # Boxes need to be put in a row (or column)
+                      fluidRow(
+                        box(plotOutput("tempPlot", height = "250px"),
+                            plotOutput("rainPlot", height = "250px")),
+                        box(
+                          headerPanel("Current NSW Wildfires"),
+                          mapviewOutput("mapPlot"),
+                          HTML("<p align='right'><font size='1'>Source: NSW Rural Fire Service</font></p>")
+                        )
+                      )
+                      
+                      
+                    )
+                      )
 
 
 server <- function(input, output) {

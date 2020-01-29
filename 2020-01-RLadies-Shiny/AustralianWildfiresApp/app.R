@@ -18,10 +18,10 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
   # Plots and controls 
   splitLayout(
     verticalLayout(
-      titlePanel("Climate: New South Wales, Australia"),
+      titlePanel("Climate: South East Australia"),
       p("A focused look at historic temperatures, rainfall, and current wildfires in 
-        New South Wales, Australia"),
-      titlePanel("Current Wildfires"),  
+        the south east part of Australia"),
+      titlePanel("Current Wildfires in New South Wales"),  
       mapviewOutput("mapPlot"),
       HTML("<p align='right'><font size='1'>Source: NSW Rural Fire Service</font></p>")
     ),
@@ -35,10 +35,11 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
           ),
         column(width = 5,
           checkboxGroupInput("city", "City:", 
-                             choices = c("Canberra" = "CANBERRA", 
+                             choices = c("Brisbane" = "BRISBANE",
+                                         "Canberra" = "CANBERRA", 
                                          "Melbourne" = "MELBOURNE", 
                                          "Sydney" = "SYDNEY"),
-                             selected = c("CANBERRA", "MELBOURNE", "SYDNEY"),
+                             selected = c("BRISBANE", "CANBERRA", "MELBOURNE", "SYDNEY"),
                                   inline = FALSE
                              )
         )
