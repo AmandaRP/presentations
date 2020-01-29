@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Shiny"
 subtitle: "R-Ladies Meetup"
-author: "Amanda Plunkett"
+author: "Amanda Peterson-Plunkett"
 date: "2016/12/12 (updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
@@ -25,8 +25,8 @@ library(memer)
 class: inverse, center, middle
 
 # Introduction to Shiny
-### R-Ladies Meetup
-### Amanda Plunkett
+### Baltimore R-Ladies Meetup
+### Amanda Peterson-Plunkett
 ### Twitter: @DrAmandaRP
 
 
@@ -101,7 +101,7 @@ knitr::include_graphics("threeamigos.jpg")
 
 ```{r, eval = FALSE}
 # Define UI for application that draws a histogram
-ui <- fluidPage(  #<<
+ui <- fluidPage(  
    
    # Application title
    titlePanel("Old Faithful Geyser Data"),   
@@ -121,24 +121,21 @@ ui <- fluidPage(  #<<
          plotOutput("distPlot")
       )
    )
-)  #<<
+)  
 
 ```
 
 ---
-# Let's look at a simple code example
+# The User Interface (UI) layout
 
-1. In RStudio run `library(shiny)`
-2. File -> New File -> Shiny Web App
-3. Give it a name and choose the "Single File" option
-4. Click "Run App"
+.pull-left[
 
 ```{r, eval = FALSE}
 # Define UI for application that draws a histogram
 ui <- fluidPage(  
    
    # Application title
-   titlePanel("Old Faithful Geyser Data"),     #<<
+   titlePanel("Old Faithful Geyser Data"),   
    
    # Sidebar with a slider input for number of bins 
    sidebarLayout(
@@ -155,180 +152,53 @@ ui <- fluidPage(
          plotOutput("distPlot")
       )
    )
-)
+)  
 
 ```
+]
+
+.pull-right[
+
+
+```{r echo=FALSE, out.width = '100%', fig.align='center'}
+knitr::include_graphics("simpleShinyDiagram.png")
+```
+
+
+]
+
 
 ---
-# Let's look at a simple code example
+# The User Interface (UI)
 
-1. In RStudio run `library(shiny)`
-2. File -> New File -> Shiny Web App
-3. Give it a name and choose the "Single File" option
-4. Click "Run App"
 
 ```{r, eval = FALSE}
 # Define UI for application that draws a histogram
 ui <- fluidPage(  
    
    # Application title
-   titlePanel("Old Faithful Geyser Data"),   
+   titlePanel("Old Faithful Geyser Data"),     
    
    # Sidebar with a slider input for number of bins 
-   sidebarLayout(                     #<<
-      sidebarPanel(            
-         sliderInput("bins",
-                     "Number of bins:",
-                     min = 1,
-                     max = 50,
-                     value = 30)
-      ), 
-      
-      # Show a plot of the generated distribution
-      mainPanel(
-         plotOutput("distPlot")
-      )
-   ) #<<
-)
-
-```
-
----
-# Let's look at a simple code example
-
-1. In RStudio run `library(shiny)`
-2. File -> New File -> Shiny Web App
-3. Give it a name and choose the "Single File" option
-4. Click "Run App"
-
-```{r, eval = FALSE}
-# Define UI for application that draws a histogram
-ui <- fluidPage(  
-   
-   # Application title
-   titlePanel("Old Faithful Geyser Data"),   
-   
-   # Sidebar with a slider input for number of bins 
-   sidebarLayout(                     
-      sidebarPanel(            #<<
-         sliderInput("bins",
-                     "Number of bins:",
-                     min = 1,
-                     max = 50,
-                     value = 30)
-      ), #<<
-      
-      # Show a plot of the generated distribution
-      mainPanel(
-         plotOutput("distPlot")
-      )
-   )
-)
-
-```
-
----
-# Let's look at a simple code example
-
-1. In RStudio run `library(shiny)`
-2. File -> New File -> Shiny Web App
-3. Give it a name and choose the "Single File" option
-4. Click "Run App"
-
-```{r, eval = FALSE}
-# Define UI for application that draws a histogram
-ui <- fluidPage(  
-   
-   # Application title
-   titlePanel("Old Faithful Geyser Data"),   
-   
-   # Sidebar with a slider input for number of bins 
-   sidebarLayout(                     
-      sidebarPanel(            
+   sidebarLayout(
+      sidebarPanel(
          sliderInput("bins",  #<<
-                     "Number of bins:", #<<
-                     min = 1,          #<<
-                     max = 50,         #<<
-                     value = 30)       #<<
-      ), 
+                     "Number of bins:",
+                     min = 1,
+                     max = 50,
+                     value = 30)
+      ),
       
       # Show a plot of the generated distribution
       mainPanel(
-         plotOutput("distPlot")
+         plotOutput("distPlot")  #<<
       )
    )
 )
 
 ```
 
-
----
-# Let's look at a simple code example
-
-1. In RStudio run `library(shiny)`
-2. File -> New File -> Shiny Web App
-3. Give it a name and choose the "Single File" option
-4. Click "Run App"
-
-```{r, eval = FALSE}
-# Define UI for application that draws a histogram
-ui <- fluidPage(  
-   
-   # Application title
-   titlePanel("Old Faithful Geyser Data"),   
-   
-   # Sidebar with a slider input for number of bins 
-   sidebarLayout(                     
-      sidebarPanel(            
-         sliderInput("bins",
-                     "Number of bins:",
-                     min = 1,
-                     max = 50,
-                     value = 30)
-      ), 
-      
-      # Show a plot of the generated distribution
-      mainPanel(                        #<<
-         plotOutput("distPlot")        
-      )                                #<<
-   )
-)
-
-```
-
----
-# Let's look at a simple code example
-
-1. In RStudio run `library(shiny)`
-2. File -> New File -> Shiny Web App
-3. Give it a name and choose the "Single File" option
-4. Click "Run App"
-
-```{r, eval = FALSE}
-# Define UI for application that draws a histogram
-ui <- fluidPage(  
-   
-   # Application title
-   titlePanel("Old Faithful Geyser Data"),   
-   
-   # Sidebar with a slider input for number of bins 
-   sidebarLayout(                     
-      sidebarPanel(            
-         sliderInput("bins",
-                     "Number of bins:",
-                     min = 1,
-                     max = 50,
-                     value = 30)
-      ), 
-      
-      # Show a plot of the generated distribution
-      mainPanel(                        
-         plotOutput("distPlot")        #<<
-      )                                
-   )
-)
-
-```
+We'll see `input$bins` and `output$distPlot` in the server function.
 
 ---
 # The Server Function
@@ -381,6 +251,13 @@ knitr::include_graphics("inputs2.png")
 ]
 </center>
 
+<br>
+<br>
+
+<center>
+Reference: shiny cheat sheet
+</center>
+
 ---
 # Outputs
 
@@ -390,11 +267,16 @@ knitr::include_graphics("inputs2.png")
 knitr::include_graphics("Outputs.png")
 ```
 
+<br>
+<center>
+Reference: shiny cheat sheet
+</center>
 
 ---
 # Where to host apps
 
-Deploy with a click of a button:
+### Deploy with a click of a button:
+
 * RStudio Connect: Commercial
 * shinyapps.io: Free and paid options   
 
@@ -402,9 +284,32 @@ Deploy with a click of a button:
 knitr::include_graphics("publish.png")
 ```
 
+<br>
 
-Open source solution:
+### Open source solution:
+
 * Shiny Server 
+
+
+---
+# Do I need shiny?
+
+It depends. If you'd like to create a dashboard without user interaction, you might consider the **flexdashboard** package. 
+
+### Pros (compared to Shiny):
+
+1. Easier to learn-- just write an Rmd document and knit!
+
+### Cons (compared to Shiny):
+
+1. R not running in the background. No user interaction.
+2. Requires re-knitting to update content
+
+### More info:
+
+* [Example](https://beta.rstudioconnect.com/jjallaire/htmlwidgets-ggplotly-geoms/htmlwidgets-ggplotly-geoms.html) of plotly graphs & flexdashboard
+* See more information at [rmarkdown.rstudio.com/flexdashboard](rmarkdown.rstudio.com/flexdashboard)
+
 
 ---
 
@@ -422,23 +327,13 @@ Open source solution:
 * [Shiny in Production](https://kellobri.github.io/shiny-prod-book/index.html) by Kelly O'Brian
 ]
 
+<br>
+<center>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">
+You&#39;re doing it right if you get frustrated: if you&#39;re not frustrated, you&#39;re (probably) not stretching yourself mentally</p>&mdash; Hadley Whickham (@hadleywickham
+) <a href="https://twitter.com/thomas_mock/status/565516733516349441">11 Feb 2015</a></blockquote>
+</center>
 
-
----
-# Do I need shiny?
-
-It depends. If you'd like to create a dashboard without user interaction, you might consider the **flexdashboard** package. 
-
-Pros (compared to Shiny):
-1. Easier to learn-- just write an Rmd document and knit!
-
-Cons (compared to Shiny):
-1. R not running in the background. No user interaction.
-2. Requires re-knitting to update content
-
-More info:
-* [Example](https://beta.rstudioconnect.com/jjallaire/htmlwidgets-ggplotly-geoms/htmlwidgets-ggplotly-geoms.html) of plotly graphs & flexdashboard
-* See more information at [rmarkdown.rstudio.com/flexdashboard](rmarkdown.rstudio.com/flexdashboard)
 
 
 
@@ -456,12 +351,12 @@ class: center, middle, inverse
 ---
 # About the Data
 
-* We're going to focus on the New Sout Wales in south east Australia
-* Today's fire location data from NSW Rural Fire Service
-* Temperature (degrees Celcius) data from the Australian Government Bureau of Meteorology
+* We're going to focus on the **New South Wales** in south east Australia
+* **Fires**: Today's fire location data from NSW Rural Fire Service
+* **Temperature** (degrees Celcius) data from the Australian Government Bureau of Meteorology
     - 1930 - 2018 (2019 was incomplete)
     - Computed yearly average 
-* Rainfall data from the Australian Government Bureau of Meteorology
+* **Rainfall** data from the Australian Government Bureau of Meteorology
     - 1930 - 2018
     - Lots of missing data! Additionally, number of measurements varied by month.
     - Removed years that did not have atleast one measurement per month for all 12 months.
@@ -476,27 +371,33 @@ class: center, middle, inverse
 ---
 # Instructions
 
-1. The following packages need to be installed:
+The following packages need to be installed: `shiny`, `shinydashboard`, `shinythemes`, `tidyverse`, `gghighlight`, `lubridate`, `latex2exp`, `sf`, `mapview`
+
 ```{R eval=FALSE}
 pkgs <- c( "shiny", "shinydashboard", "shinythemes", "tidyverse", "gghighlight", "lubridate", "latex2exp", "sf", "mapview" )
 install.packages( pkgs )
 ```
-1. Code available at [github.com/AmandaRP/RLadiesBmoreShinyWorkshop](github.com/AmandaRP/RLadiesBmoreShinyWorkshop) (you can fork this repo or just copy and paste the code)
-2. You'll need the wildfires.R script in this directory
-3. We'll start by looking at the app.R script in the shinyApp folder
-    - Try running the app.
-    - Try different themes (line 17).
-    - The rainfall plot (rainPlot) is defined in the server plot, but not showing in the UI. Add it to the UI below the temperature plot.
+
+2. Code available at [github.com/AmandaRP/RLadiesBmoreShinyWorkshop](github.com/AmandaRP/RLadiesBmoreShinyWorkshop) (you can fork this repo and pull into RStudio or just copy and paste the code into RStudio)
+3. You'll need the `wildfires.R` script in this directory. (This script reads/cleans/summarizes the data.)
+4. We'll start by looking at the `app.R` script in the `shinyApp` folder
+    - Try running the app. (You'll notice that it's missing a few things.)
+    - The rainfall plot (`rainPlot`) is defined in the server plot, but not showing in the UI. Add it to the UI below the temperature plot.
     - The year slider and city checkbox selection are not having an effect on the plots. Fix this in the server function.
-4. Next move to the app.R file in the shinyDashboard folder
+    - Try different themes (line 17).
+5. Next move to the `app.R` file located in the `shinyDashboard` folder
     - Try running the app.
     - Copy and paste components of the shiny app from #3 into this shiny dashboard app.
 
 
 
-```{r echo=FALSE, out.width = '75%', fig.align='center', fig.cap='Photo: Matthew Abbot'}
-knitr::include_graphics("kangaroo_fire.jpg")
-```
+
+---
+# Soundtrack
+
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/l3Gux-Ly384" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
 
 ---
 # Thanks!
@@ -506,6 +407,10 @@ knitr::include_graphics("kangaroo_fire.jpg")
 * Wildfire polygon code provided by Dean Marchiori 
 * Data sourced from the NSW Rural Fire Service and the Australian Government Bureau of Meteorology
 * Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
+```{r echo=FALSE, out.width = '75%', fig.align='center', fig.cap='Photo: Matthew Abbot'}
+knitr::include_graphics("kangaroo_fire.jpg")
+```
 
 ]
 
@@ -522,4 +427,7 @@ Packages used in making the app:
 * latex2exp 
 * sf 
 * mapview
+
+Best wishes to our mates in Australia! May the wildfires end soon!
+
 ]
