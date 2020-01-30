@@ -39,7 +39,6 @@ knitr::include_graphics("hex-shiny.png")
 
 An R package for building interactive web applications.
 
---
 
 # Before Shiny:
 
@@ -293,22 +292,25 @@ knitr::include_graphics("publish.png")
 ---
 # Do I need shiny?
 
-It depends. If you'd like to create a dashboard without user interaction, you might consider the **flexdashboard** package. 
+It depends. If you'd like to create a dashboard without the backend R computation, you might consider the **flexdashboard** package. 
 
 ### Pros (compared to Shiny):
 
 1. Easier to learn-- just write an Rmd document and knit!
+2. More options for hosting online (shiny server not required*)
 
 ### Cons (compared to Shiny):
 
-1. R not running in the background. No user interaction.
-2. Requires re-knitting to update content
+1. R not running in the background. No user interaction*.
+
 
 ### More info:
 
 * [Example](https://beta.rstudioconnect.com/jjallaire/htmlwidgets-ggplotly-geoms/htmlwidgets-ggplotly-geoms.html) of plotly graphs & flexdashboard
-* See more information at [rmarkdown.rstudio.com/flexdashboard](rmarkdown.rstudio.com/flexdashboard)
+* See more information at [rmarkdown.rstudio.com/flexdashboard](https://rmarkdown.rstudio.com/flexdashboard)
 
+
+$*$ Note: You can [add Shiny to a flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/shiny.html)
 
 ---
 
@@ -377,17 +379,26 @@ pkgs <- c( "shiny", "shinydashboard", "shinythemes", "tidyverse", "gghighlight",
 install.packages( pkgs )
 ```
 
-2. Code available at [github.com/AmandaRP/RLadiesBmoreShinyWorkshop](github.com/AmandaRP/RLadiesBmoreShinyWorkshop) (you can fork this repo and pull into RStudio or just copy and paste the code into RStudio)
-3. You'll need the `wildfires.R` script in this directory. (This script reads/cleans/summarizes the data.)
-4. We'll start by looking at the `app.R` script in the `shinyApp` folder
+Code available at [github.com/AmandaRP/RLadiesBmoreShinyWorkshop](www.github.com/AmandaRP/RLadiesBmoreShinyWorkshop) (you can fork this repo and pull into RStudio or just copy and paste the code into RStudio)
+
+---
+# Instructions
+
+Code available at [github.com/AmandaRP/RLadiesBmoreShinyWorkshop](www.github.com/AmandaRP/RLadiesBmoreShinyWorkshop) (you can fork this repo and pull into RStudio or just copy and paste the code into RStudio)
+
+2. You'll need the `wildfires.R` script in this directory. (This script reads/cleans/summarizes the data.)
+
+3. We'll start by looking at the `app.R` script in the `shinyApp` folder
     - Try running the app. (You'll notice that it's missing a few things.)
     - The rainfall plot (`rainPlot`) is defined in the server plot, but not showing in the UI. Add it to the UI below the temperature plot.
     - The year slider and city checkbox selection are not having an effect on the plots. Fix this in the server function.
     - Try different themes (line 17).
-5. Next move to the `app.R` file located in the `shinyDashboard` folder
+    
+4. Next move to the `app.R` file located in the `shinyDashboard` folder
     - Try running the app. (You'll see it has missing components.)
-    - Copy and paste components of the shiny app from #3 into this shiny dashboard app (search for "TODO" in the dashboard app code for hints).
+    - Copy and paste components of the shiny app from #2 into this shiny dashboard app (search for "TODO" in the dashboard app code for hints).
     - Try other "skins". See line 21.
+    - If you have extra time, read about info boxes and try it: rstudio.github.io/shinydashboard/structure.html#infobox. 
 
 
 
