@@ -292,7 +292,7 @@ knitr::include_graphics("publish.png")
 ---
 # Do I need shiny?
 
-It depends. If you'd like to create a dashboard without the backend R computation, you might consider the **flexdashboard** package. 
+It depends on your application. You might consider the **flexdashboard** package. 
 
 ### Pros (compared to Shiny):
 
