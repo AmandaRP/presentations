@@ -11,7 +11,7 @@
 # Instructions: 
 # 1. Search for "TODO" in the code below and follow the in-line instructions
 # 2. Try other skins (see line 21)
-# 2. If you have extra time, read about info boxes: 
+# 3. If you have extra time, read about info boxes: 
 #    https://rstudio.github.io/shinydashboard/structure.html#infobox
 #    Try adding an info box. 
 
@@ -25,8 +25,10 @@ ui <- dashboardPage(skin = "purple", # see more skins at https://rstudio.github.
   
   dashboardSidebar(
   
-    #TODO: add the sliderInput here,
-    
+    sliderInput("year", "Years:",
+                min = 1930, max = 2018,
+                value = c(1930,2018)),
+
     checkboxGroupInput("city", "City:", 
                        choices = c("Brisbane" = "BRISBANE",
                                    "Canberra" = "CANBERRA", 
@@ -41,12 +43,13 @@ ui <- dashboardPage(skin = "purple", # see more skins at https://rstudio.github.
   dashboardBody(
     # Boxes need to be put in a row (or column):
     fluidRow(
-      box(#TODO: Add the temperature plot here,
-          #TODO: Add the rain plot here
+      box(      plotOutput("tempPlot", height = "250px"), 
+                plotOutput("rainPlot", height = "250px") 
+                
         ),
       box(
         headerPanel("Current NSW Wildfires"),
-        #TODO: add the map plot here,
+        mapviewOutput("mapPlot"),
         HTML("<p align='right'><font size='1'>Source: NSW Rural Fire Service</font></p>")
       )
     )

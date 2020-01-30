@@ -18,7 +18,7 @@ library(shiny)
 source("wildfires.R")
 
 # Define UI for application
-ui <- fluidPage(theme = shinytheme("cerulean"), 
+ui <- fluidPage(theme = shinytheme("superhero"), 
                 #See more themes at https://rstudio.github.io/shinythemes/ 
    
   # Plots and controls 
@@ -50,7 +50,8 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
         )
           
       ),
-      plotOutput("tempPlot", height = "250px")
+      plotOutput("tempPlot", height = "250px"), 
+      plotOutput("rainPlot", height = "250px") 
     )
     
       
@@ -74,7 +75,7 @@ server <- function(input, output) {
        
      # Compute averages (for selected cities and years)
      temp_avgs <- temperature %>% 
-       filter(year >= 1930, year <= 2018, city_name %in% c("CANBERRA", "MELBOURNE")) %>%
+       filter(year >= input$year[1], year <= input$year[2], city_name %in% input$city) %>%
        group_by(year) %>%
        summarize(avg_temp = mean(temperature, na.rm = TRUE)) 
        
@@ -91,8 +92,8 @@ server <- function(input, output) {
    
    # Rain plot
    output$rainPlot <- renderPlot({
-     p + xlim(1930, 2018) +
-       gghighlight(tolower(city_name) %in% tolower(c("CANBERRA", "MELBOURNE")), 
+     p + xlim(input$year[1], input$year[2]) +
+       gghighlight(tolower(city_name) %in% tolower(input$city), 
                    use_group_by = FALSE,
                    use_direct_label = FALSE) 
  
